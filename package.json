@@ -1,0 +1,59 @@
+{
+  "name": "@attestto/did-sns-resolver",
+  "version": "0.1.0",
+  "description": "W3C DID Resolution for did:sns (Solana Name Service)",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./driver": {
+      "import": "./dist/driver/server.js",
+      "types": "./dist/driver/server.d.ts"
+    }
+  },
+  "bin": {
+    "did-sns-driver": "dist/driver/server.js"
+  },
+  "files": [
+    "dist",
+    "Dockerfile",
+    "did-sns.json",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/driver/server.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "did",
+    "did-sns",
+    "solana",
+    "solana-name-service",
+    "w3c",
+    "decentralized-identity",
+    "universal-resolver",
+    "verifiable-credentials"
+  ],
+  "author": "Attestto (https://attestto.com)",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Attestto-com/did-sns-resolver.git"
+  },
+  "homepage": "https://spec.attestto.com",
+  "dependencies": {
+    "@solana/web3.js": "^1.98.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

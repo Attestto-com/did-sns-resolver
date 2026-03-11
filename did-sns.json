@@ -1,0 +1,27 @@
+{
+  "$schema": "https://raw.githubusercontent.com/decentralized-identity/universal-resolver/main/docs/driver-schema.json",
+  "method": "sns",
+  "implementation": "Attestto did:sns Resolver",
+  "implementationUrl": "https://github.com/Attestto-com/did-sns-resolver",
+  "resolverUri": "http://uni-resolver-driver-did-sns:8080/1.0/identifiers/",
+  "testIdentifiers": [
+    "did:sns:bonfida",
+    "did:sns:attestto",
+    "did:sns:devnet:test.attestto"
+  ],
+  "maintainer": {
+    "name": "Attestto Identity Standards Group",
+    "email": "standards@attestto.com",
+    "website": "https://attestto.com"
+  },
+  "docker": {
+    "image": "attestto/uni-resolver-driver-did-sns",
+    "tag": "latest",
+    "ports": {
+      "8080": "8080"
+    },
+    "env": {
+      "SOLANA_RPC_URL": "https://api.mainnet-beta.solana.com"
+    }
+  }
+}
