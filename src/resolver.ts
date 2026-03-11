@@ -220,11 +220,15 @@ export class DidSnsResolver {
 
     let domainKey: PublicKey
 
+    // SNS PDA derivation uses 3 seeds: [hash, classKey, parent]
+    // classKey is 32 zero bytes for standard domains (no class lock)
+    const zeroClassKey = Buffer.alloc(32)
+
     if (parts.length === 1) {
       // Root domain: alice → hash("alice") with parent = SOL_TLD
       const hashedName = this.hashDomainName(parts[0])
       const [key] = PublicKey.findProgramAddressSync(
-        [hashedName, SOL_TLD_PARENT.toBuffer()],
+        [hashedName, zeroClassKey, SOL_TLD_PARENT.toBuffer()],
         SNS_PROGRAM_ID
       )
       domainKey = key
@@ -232,13 +236,13 @@ export class DidSnsResolver {
       // Subdomain: alice.attestto → hash("attestto") for parent, then hash("\0alice") with parent key
       const parentHash = this.hashDomainName(parts[1])
       const [parentKey] = PublicKey.findProgramAddressSync(
-        [parentHash, SOL_TLD_PARENT.toBuffer()],
+        [parentHash, zeroClassKey, SOL_TLD_PARENT.toBuffer()],
         SNS_PROGRAM_ID
       )
 
       const subHash = this.hashDomainName(`\0${parts[0]}`)
       const [subKey] = PublicKey.findProgramAddressSync(
-        [subHash, parentKey.toBuffer()],
+        [subHash, zeroClassKey, parentKey.toBuffer()],
         SNS_PROGRAM_ID
       )
       domainKey = subKey
